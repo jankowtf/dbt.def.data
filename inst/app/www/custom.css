@@ -1,0 +1,74 @@
+/* --- Boxes --- */
+/*
+.box .box-header {
+    padding: 10px
+}
+
+.box .box-header .btn, .box .box-header .input-group-btn .btn {
+  padding: 0px 8px;
+}
+*/
+
+.box .box-header .box-title {
+/*    font-size: 16px;*/
+/*    font-size:85%;*/
+    font-weight: bold;
+}
+
+.form-group .checkbox label, .form-group .radio label, .form-group label {
+  font-size: 20px;
+  line-height: 1.42857143;
+  color: #282D37;    # Cool gray 700
+  font-weight: 800;
+}
+
+.form-group {
+/* padding-bottom: 5px; */
+    padding-bottom: 0px;
+    margin: 0px 0 0 0;
+    margin-bottom: 0px;
+}
+
+/* Form control background */
+/*
+.form-control {
+    background-color: #9f0a0a !important;
+}
+*/
+
+/* --- Selectize controls --- */
+.selectize-control {
+    margin-bottom: 0px !important;
+}
+
+/* --- Tab panels --- */
+.skin-red .nav-tabs {
+  background: #1455c0;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: #555;
+  cursor: default !important;
+  background-color: #061350 !important;
+  border: 0px solid #ddd !important;
+  border-bottom-color: transparent !important;
+}
+
+.bttn-gradient.bttn-primary, .bttn-simple.bttn-primary {
+  background: #f01314;
+}
+
+/* --- RMarkdown --- */
+#dbt_default {
+   color: #646973;
+}
+
+.emphasized {
+   font-size: 1.25em;
+}
+
+.main-container {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}

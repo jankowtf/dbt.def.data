@@ -1,0 +1,302 @@
+---
+title: "Dev notebook"
+format: html
+---
+
+
+```{r}
+devtools::load_all(".")
+```
+
+
+```{r}
+data_train()
+```
+
+# Stackoverflow
+
+How can I get a path to a file in my own package that works
+1. in both the development as well as the usage context of the package
+2. without hard-coding the package's name
+3. (ideally) without depending on an contributed package
+
+I know that stackovervlow doesn't like these "most elegant/best" type of questions, but I'm feeling bold 😉
+
+I'm looking for something like what `testthat::test_path()` does
+
+When creating a  `golem` app the package creates `app_sys()`
+
+```{r}
+app_sys <- function(...) {
+  system.file(..., package = "dbt.def.mod.01")
+}
+```
+
+That's cool, but I don't like the fact that you need to hard-code the package name.
+
+Here's what I currently use
+
+```{r}
+pkg_file <- function(path) {
+    pkgload:::shim_system.file(path,
+        package = pkgload::pkg_name())
+}
+```
+
+Supposing that `inst/app/some_config.yml` exists calling `pkg_file("app/some_config.yml")` would either give me 
+
+```
+"/Users/jankothyson/Code/dbt/dbt-def-data/inst/app/some_config.yml"
+```
+
+or 
+
+```
+
+```
+
+# Targets
+
+```{r}
+targets::tar_make()
+targets::tar_manifest()
+targets::tar_list()
+targets::tar_read(path_data_001_employee_fluctuation_train)
+targets::tar_read(data_001_employee_fluctuation_train)
+```
+
+# Data
+
+```{r}
+load("data/data_001_employee_fluctuation_train.rda")
+data  <- data_001_employee_fluctuation_train
+```
+
+# Crosswalk: encoding
+
+Extract
+
+```{r}
+# library(magrittr)
+cw_encodings <- data %>% cw_encoding_extract()
+```
+
+Expand
+
+```{r}
+cw_encodings %>% names()
+cw_encoding_expanded <- cw_encodings[1] %>% cw_encoding_expand(encoding_prefill = "original")
+cw_encoding_expanded <- cw_encodings["Attrition"] %>% cw_encoding_expand(encoding_prefill = "original")
+```
+
+```{r, eval = FALSE}
+cw_encoding_expanded %>% tidyr::pivot_wider(names_from = "variable", values_from = "encoding_de_internal")
+```
+
+```{r}
+library(janitor)
+# Create a data frame with English encodings and German translations
+translation_df <- data.frame(English = c("Hello", "Goodbye", "Thank you"),
+                             German = c("Hallo", "Auf Wiedersehen", "Danke"))
+
+# Create a data frame with the encoding column
+df <- data.frame(Language = c("Hello", "Thank you", "Goodbye"))
+
+# Join the data frames based on the Language column
+df_merged <- merge(df, translation_df, by = "Language")
+
+# Select the columns you want to keep in the merged data frame
+df_translated <- df_merged[, c("Language", "German")]
+
+# Rename the Language column to English
+names(df_translated)[names(df_translated) == "Language"] <- "English"
+```
+
+```{r}
+# Install and load the dplyr package
+library(dplyr)
+
+# Create a data frame with English encodings and German translations
+translation_df <- data.frame(English = c("Hello", "Goodbye", "Thank you"),
+                             German = c("Hallo", "Auf Wiedersehen", "Danke"))
+
+# Create a data frame with the encoding column
+df <- data.frame(Language = c("Hello", "Thank you", "Goodbye"))
+
+# Join the data frames based on the Language column
+df_translated <- left_join(df, translation_df, by = c("Language" = "English"))
+
+# Select the columns you want to keep in the merged data frame
+df_translated <- df_translated[, c("Language", "German")]
+
+# Rename the Language column to English
+names(df_translated)[names(df_translated) == "Language"] <- "English"
+```
+
+```{r}
+# Function to translate an encoding from multiple languages to one language
+translate_encoding <- function(df, encoding_col, translation_df, from_cols, to_col) {
+  # Join the data frames based on the encoding column
+  require(dplyr)
+  df_translated <- left_join(df, translation_df, by = encoding_col)
+  
+  # Select the columns you want to keep in the joined data frame
+  df_translated <- df_translated[, c(encoding_col, to_col)]
+  
+  # Rename the encoding column to the original encoding
+  names(df_translated)[names(df_translated) == encoding_col] <- paste0(encoding_col, "_Original")
+  
+  return(df_translated)
+}
+
+# Example usage: Translate an encoding from three languages (English, French, and German) to Spanish
+df <- data.frame(Language = c("Hello", "Thank you", "Goodbye", "Bonjour", "Danke", "Auf Wiedersehen"))
+translation_df <- data.frame(English = c("Hello", "Goodbye", "Thank you"),
+                             French = c("Bonjour", "Au revoir", "Merci"),
+                             German = c("Hallo", "Auf Wiedersehen", "Danke"),
+                             Spanish = c("Hola", "Adiós", "Gracias"))
+df_translated <- translate_encoding(df, "Language", translation_df, c("English", "French", "German"), "Spanish")
+```
+
+
+```{r}
+# Function to translate an encoding from multiple languages to one language
+translate_encoding <- function(df, translation_df, col_by_left, col_by_right, col_to) {
+  # Join the data frames based on the encoding column
+  by <- c(col_by_right) %>% purrr::set_names(col_by_left)
+  df_translated <- dplyr::left_join(
+    df, 
+    translation_df %>% dplyr::select(col_by_right, col_to), 
+    by = by)
+  
+  # Select the columns you want to keep in the joined data frame
+  df_translated <- df_translated[, c(col_by_right, col_to)]
+  
+  # # Rename the encoding column to the original encoding
+  # names(df_translated)[names(df_translated) == encoding_col] <- paste0(encoding_col, "_Original")
+  
+  return(df_translated)
+}
+
+# Example usage: Translate an encoding from three languages (English, French, and German) to Spanish
+df <- data.frame(value = c("Hello", "Thank you", "Goodbye", "Bonjour", "Danke", "Auf Wiedersehen"))
+translation_df <- data.frame(encoding_en = c("Hello", "Goodbye", "Thank you"),
+                             encoding_fr = c("Bonjour", "Au revoir", "Merci"),
+                             encoding_de = c("Hallo", "Auf Wiedersehen", "Danke"),
+                             encoding_es = c("Hola", "Adiós", "Gracias"))
+df_translated <- translate_encoding(df, translation_df, col_by_left = "value", col_by_right = "encoding_en", col_to = "encoding_de")
+```
+
+```{r}
+translation_df %>% write.csv("translation_df.csv", row.names = FALSE)
+```
+
+```{r}
+```
+
+Persist individual encoding
+
+```{r}
+cw_encodings_expanded <- cw_encodings %>% cw_encodings_expand()
+cw_encodings_expanded %>% cw_encodings_persist(overwrite = TRUE) %>% sort()
+```
+
+Persit multiple encodings
+
+```{r}
+
+```
+
+
+```{r}
+.col <- "de"
+"encoding_" %>%
+            stringr::str_c(.col) %>%
+            dplyr::sym()
+```
+
+
+```{r}
+paths_cw_encoding <- cw_encoding %>% cw_encoding_persist() %>% sort()
+```
+
+# Crosswalk: rename column
+
+```{r}
+data %>%
+  cw_encode_column(
+      path_cw_encoding = paths_cw_encoding[1],
+      vec_cast = FALSE
+  )
+```
+
+# Crosswalk: rename columns
+
+```{r}
+data %>%
+  cw_encode_columns(
+      crosswalk_files = paths_cw_encoding[1:2],
+      vec_cast = FALSE
+  )
+```
+
+
+```{r}
+usethis::use_data_raw("data_001_employee_fluctuation_train")
+usethis::use_data
+```
+--------------------------------------------------------------------------------
+
+# Google Cloud Translation API
+
+```{r}
+renv::install(c("googleAuthR", "googleCloudStorageR"))
+
+# Load the googleAuthR and googleCloudStorageR packages
+library(googleAuthR)
+library(googleCloudStorageR)
+library(httr)
+
+# Set your API key
+api_key <- "API_KEY"
+
+# Set the source and target languages
+source_language <- "en"
+target_language <- "de"
+
+# Set the text to translate
+text <- "Hello"
+text <- data %>% dplyr::count(EducationField) %>% dplyr::pull(EducationField)
+
+response <- POST(
+  "https://translation.googleapis.com/language/translate/v2",
+  query = list(
+    key = api_key,
+    source = source_language,
+    target = target_language,
+    q = text[1:2],
+    format = "text"
+  )
+)
+
+# Parse the response as JSON
+translation <- content(response, as = "parsed")
+
+# Print the translated text
+translation$data$translations[[1]]$translatedText
+```
+
+
+--------------------------------------------------------------------------------
+
+# Backup
+
+## Debugger
+
+```{r}
+foo
+foo(1)
+```
+
+
+

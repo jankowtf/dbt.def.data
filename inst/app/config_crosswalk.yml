@@ -1,0 +1,114 @@
+default:
+    data_train:
+        age:
+            external_en: "Age"
+            external_de: "Alter"
+        attrition:
+            external_en: "Attrition"
+            external_de: "Weggang"
+        business_travel:
+            external_en: "BusinessTravel"
+            external_de: "Reisen"
+        daily_rate:
+            external_en: "DailyRate" # ?
+            external_de: "Tagessatz"
+        department:
+            external_en: "Department"
+            external_de: "Abteilung"
+        distance_from_home:
+            external_en: "DistanceFromHome"
+            external_de: "EntfernungWohnort"
+        education:
+            external_en: "Education"
+            external_de: "Ausbildung"
+        education_field:
+            external_en: "EducationField"
+            external_de: "AusbildungBereich"
+        employee_count:
+            external_en: "EmployeeCount"
+            external_de: "MitarbeiterZaehler"
+        employee_number:
+            external_en: "EmployeeNumber"
+            external_de: "MitarbeiterNummer"
+        environment_satisfaction:
+            external_en: "EnvironmentSatisfaction"
+            external_de: "ZufriedenheitUmgebung"
+        gender:
+            external_en: "Gender"
+            external_de: "Geschlecht"
+        hourly_rate:
+            external_en: "HourlyRate"
+            external_de: "Stundensatz"
+        job_involvement:
+            external_en: "JobInvolvement"
+            external_de: "JobMitarbeit"
+        job_level:
+            external_en: "JobLevel"
+            external_de: "JobLevel"
+        job_role:
+            external_en: "JobRole"
+            external_de: "JobRolle"
+        job_satisfaction:
+            external_en: "JobSatisfaction"
+            external_de: "JobZufriedenheit"
+        marital_status:
+            external_en: "MaritalStatus"
+            external_de: "Beziehungsstatus"
+        monhtly_income:
+            external_en: "MonthlyIncome"
+            external_de: "EinkommenMonat"
+        monhtly_rate:
+            external_en: "MonthlyRate"
+            external_de: "SatzMonat"
+        num_companies_worked:
+            external_en: "NumCompaniesWorked"
+            external_de: "AnzahlVorherigeArbeitgeber"
+        over_18:
+            external_en: "Over18"
+            external_de: "Ueber18"
+        overtime:
+            external_en: "OverTime"
+            external_de: "Ueberstunden"
+        percent_salary_hike:
+            external_en: "PercentSalaryHike"
+            external_de: "GehaltserhoehungProzent"
+        performance_rating:
+            external_en: "PerformanceRating"
+            external_de: "Leistungsbeurteilung"
+        relationship_satisfaction:
+            external_en: "RelationshipSatisfaction"
+            external_de: "ZufriedenheitBeziehung"
+        standard_hours:
+            external_en: "StandardHours"
+            external_de: "StandardArbeitszeit"
+        stock_option_level:
+            external_en: "StockOptionLevel"
+            external_de: "Aktienoptionen"
+        total_working_years:
+            external_en: "TotalWorkingYears"
+            external_de: "Berufserfahrung"
+        training_times_last_year:
+            external_en: "TrainingTimesLastYear"
+            external_de: "TrainingszeitenLetztesJahr"
+        work_life_balance:
+            external_en: "WorkLifeBalance"
+            external_de: "WorkLifeBalance"
+        years_at_company:
+            external_en: "YearsAtCompany"
+            external_de: "FirmenzugehoerigkeitJahre"
+        years_in_current_role:
+            external_en: "YearsInCurrentRole"
+            external_de: "JahreInDerzeitigerPosition"
+        years_since_last_promotion:
+            external_en: "YearsSinceLastPromotion"
+            external_de: "JahreSeitLetzterBefoerderung"
+        years_with_curr_manager:
+            external_en: "YearsWithCurrManager"
+            external_de: "JahreMitDerzeitigemVorgesetzten"
+
+production:
+    inherits: default
+    test: "hello world"
+
+dev:
+    inherits: default

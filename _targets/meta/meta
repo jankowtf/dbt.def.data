@@ -1,0 +1,10 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+data_001_employee_fluctuation_train|stem|e14c23788919967b|f1c478eab0e08cc2|27ad6e61adf86824|-2063143821||t19351.5569721056s|729c95a9f76e9496|43070|rds|local|vector|||0.026||
+data_definitions|stem|3d65b44ae4d7efdb|504b4d4242fc116c|b9f368d1bec6181a|405470343||t19351.5569716102s|f586e7aff6cad421|396|rds|local|vector|||0.087||
+data_train|function|d669e892287169ef|||||||||||||||
+io_read_xlsx|function|a6139ef4efe1205d|||||||||||||||
+path_data_001_employee_fluctuation_train|stem|552fd6507a3f24d5|d9b867fc641a5bf2|ef46db3751d8e999|1428119452|datalake/layer_00/telco_train.xlsx|t19116.9079239753s|75c32a5685bc705c|183330|file|local|vector|||0.104||
+path_data_definitions|stem|aa780b4af8dfed18|539105d9d0fd2278|ef46db3751d8e999|1014750642|datalake/layer_00/telco_data_definitions.xlsx|t19116.9081696417s|0c1a198e14f62216|10315|file|local|vector|||0.104||
+pkg_file|function|a80238cdacbb4c24|||||||||||||||
+repository|object|250eab2a10ffa759|||||||||||||||
+storage|object|ed5f1418c4260363|||||||||||||||
