@@ -32,7 +32,7 @@ renv::snapshot(prompt = FALSE)
 
 # Git
 usethis::use_git()
-usethis::use_git_remote(url = "https://github.com/rappster/dbt-def-data.git", overwrite = TRUE)
+usethis::use_git_remote(url = "https://github.com/rappster/dbt.def.data.git", overwrite = TRUE)
 usethis::git_default_branch_configure()
 usethis::use_tidy_contributing()
 usethis::use_tidy_support()
@@ -74,18 +74,18 @@ usethis::use_build_ignore(c("dev", "inst/examples", "tests"))
 # renv::install("rappster/confx")
 # usethis::use_dev_package("confx", type = "Imports", remote = "rappster/confx")
 
-# Dependencies ----------
+# Install dependencies ---------------------------------------------------------
 
 renv::install("pkgload")
 renv::install("targets")
 renv::install("rappster/laker")
 renv::install("rappster/valid")
+
 renv::install("logger")
 renv::install("crosswalkr")
-renv::install("janitor")
+# renv::install("janitor")
 
-renv::install("rstudio/plumber", rebuild = TRUE)
-renv::install("httr")
+# Record package dependencies --------------------------------------------------
 
 usethis::use_package("pkgload")
 usethis::use_package("crosswalkr")
@@ -98,4 +98,4 @@ usethis::use_package("logger", type = "Suggests")
 
 # Tests -------------------------------------------------------------------
 
-usethis::use_test("plumber")
+usethis::use_test()

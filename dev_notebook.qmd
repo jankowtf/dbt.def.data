@@ -46,7 +46,7 @@ pkg_file <- function(path) {
 Supposing that `inst/app/some_config.yml` exists calling `pkg_file("app/some_config.yml")` would either give me 
 
 ```
-"/Users/jankothyson/Code/dbt/dbt-def-data/inst/app/some_config.yml"
+"/Users/jankothyson/Code/dbt/dbt.def.data/inst/app/some_config.yml"
 ```
 
 or 

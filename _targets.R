@@ -14,7 +14,7 @@ tar_option_set(
 )
 
 laker::link_data_lake(
-    "~/data/dbt-def-datalake/lab_001",
+    "~/data/dbt.def.datalake/lab_001",
     "datalake"
 )
 
